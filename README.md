@@ -10,7 +10,7 @@ This notebook demonstrates how to use a Generative Adversarial Network (GAN) to 
 
 ## 📂 Dataset
 
-We use the **User Tracking Dataset** from Kaggle. The script mounts and unpacks the dataset into `/kaggle/input` for use in this notebook.
+I used the **User Tracking Dataset** from Kaggle. The script mounts and unpacks the dataset into `/kaggle/input` for use in this notebook.
 
 **Includes:**  
 - Elapsed time  
