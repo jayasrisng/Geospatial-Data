@@ -1,69 +1,79 @@
-# 🎯 GAN for VR Telemetry Data – Open in Colab
+# 🛰️ GAN-Based Synthetic Data Generator for VR User Tracking
 
-This notebook demonstrates how to use a Generative Adversarial Network (GAN) to generate synthetic telemetry data from a VR user tracking dataset. It includes secure data loading from Kaggle, preprocessing using MinMax scaling, and a full GAN training loop using TensorFlow.
+This project demonstrates how to preprocess and generate synthetic geospatial motion data using a GAN architecture in Google Colab. The data is sourced from the **User Tracking Dataset** on Kaggle, containing spatial and rotational motion telemetry of VR players.
 
-> ✅ Designed for **Google Colab**  
-> 📦 Uses real motion tracking data from Kaggle  
-> 🔒 Supports data privacy and research reproducibility
+🎯 **Use case**: Privacy-preserving user motion modeling in immersive environments.
 
----
-
-## 📂 Dataset
-
-I used the **User Tracking Dataset** from Kaggle. The script mounts and unpacks the dataset into `/kaggle/input` for use in this notebook.
-
-**Includes:**  
-- Elapsed time  
-- Player body and head position/rotation (XYZ + quaternions)
+📂 **Dataset**: `combined_data.csv` from Kaggle's *User Tracking Dataset*.  
+Includes:
+- Elapsed session time  
+- Player body position (X, Y, Z)  
+- Player body & head rotation (quaternion: X, Y, Z, W)
 
 ---
 
-## 🧰 Technologies Used
+## 🛠️ Technologies Used
 
-- **Python 3**
-- **TensorFlow 2.15**
-- **Pandas & NumPy**
-- **scikit-learn (MinMaxScaler)**
-- **Google Colab environment**
+- **Google Colab + Python 3**
+- **TensorFlow 2.15** for deep learning
+- **Pandas, NumPy** for data wrangling
+- **scikit-learn** for normalization (MinMaxScaler)
+- **Matplotlib, Seaborn** for correlation heatmaps and feature analysis
 
 ---
 
-## 🚀 How to Run (Colab Instructions)
+## 🚀 Workflow
 
-1. Click **"Open in Colab"** from the repo (if linked) or open this notebook manually in Google Colab.
-2. Run the first cell to download and mount the Kaggle dataset.
-3. Follow the notebook step-by-step:
-   - Data preparation
-   - Scaling features
-   - Building the GAN (generator + discriminator)
-   - Loss function and optimizer setup
-   - Training for 50 epochs
+1. **Import Kaggle Data**
+   - Auto-download + extract using Colab-compatible script
+   - Supports temporary Kaggle tokened URLs
+
+2. **Data Preprocessing**
+   - Select numeric motion fields only
+   - Normalize features in range `[-1, 1]` using `MinMaxScaler`
+
+3. **GAN Architecture**
+   - Generator: 2–3 hidden layers using ReLU/tanh
+   - Discriminator: Fully connected classifier
+   - Optimizers: Adam with binary crossentropy loss
+
+4. **Training**
+   - Trains GAN over 50 epochs using real + generated motion data
+   - Logs epoch progress
+
+5. **Synthetic Data Generation**
+   - Generates new samples of player motion
+   - Scales them back to original range
+   - Exports to `synthetic_data.csv`
+
+6. **Correlation Analysis (Optional)**
+   - Plots encoded correlation matrices to inspect statistical realism
+   - Saves as `correlation_matrix.csv`
 
 ---
 
 ## 📈 Output
 
-After training:
-- The generator learns to synthesize realistic user motion patterns.
-- The discriminator differentiates real vs fake motion vectors.
-- You can extend this pipeline to evaluate privacy-preserving synthetic data.
+- `new_synthetic_data.csv` — Normalized, GAN-generated user motion telemetry
+- `correlation_matrix.csv` — Heatmap matrix of feature relations (if enabled)
 
 ---
 
-## 💡 Use Cases
+## 🔐 Purpose & Ethics
 
-- Safe simulation of VR telemetry
-- Privacy-focused data generation for ML training
-- Synthetic datasets for research and demo environments
+This project is a proof of concept for **privacy-preserving data generation** from player telemetry. By learning to model behavior without storing real identifiable sequences, we enable:
+- Ethical VR analytics
+- Secure ML research
+- Compliance with data protection frameworks (e.g., GDPR)
 
 ---
 
 ## 📄 License
 
-MIT License — free to use with credit.
+MIT License — free to use, modify, and cite with attribution.
 
 ---
 
 ## 👩‍💻 Author
 
-Built by [Jayasri](https://github.com/jayasrisng) 
+Created by [Jayasri](https://github.com/jayasrisng)  
