@@ -1,79 +1,64 @@
-# 🛰️ GAN-Based Synthetic Data Generator for VR User Tracking
+# Geospatial Data
 
-This project demonstrates how to preprocess and generate synthetic geospatial motion data using a GAN architecture in Google Colab. The data is sourced from the **User Tracking Dataset** on Kaggle, containing spatial and rotational motion telemetry of VR players.
+**GAN-based synthetic motion-data generation for VR user tracking experiments.**
 
-🎯 **Use case**: Privacy-preserving user motion modeling in immersive environments.
+This project demonstrates preprocessing and synthetic-data generation for VR user-tracking telemetry. It uses a GAN workflow in Python/Colab to model spatial and rotational motion features from a user-tracking dataset.
 
-📂 **Dataset**: `combined_data.csv` from Kaggle's *User Tracking Dataset*.  
-Includes:
-- Elapsed session time  
-- Player body position (X, Y, Z)  
-- Player body & head rotation (quaternion: X, Y, Z, W)
+## Problem
 
----
+VR tracking data can expose behavioral patterns through body position, head rotation, and session timing. Synthetic data generation is one way to explore analytics workflows without relying directly on raw user traces.
 
-## 🛠️ Technologies Used
+This project asks:
 
-- **Google Colab + Python 3**
-- **TensorFlow 2.15** for deep learning
-- **Pandas, NumPy** for data wrangling
-- **scikit-learn** for normalization (MinMaxScaler)
-- **Matplotlib, Seaborn** for correlation heatmaps and feature analysis
+> Can a lightweight GAN pipeline generate motion-like samples that preserve useful feature relationships for experimentation?
 
----
+## Dataset context
 
-## 🚀 Workflow
+The workflow is built around `combined_data.csv` from a Kaggle user-tracking dataset. Features include:
 
-1. **Import Kaggle Data**
-   - Auto-download + extract using Colab-compatible script
-   - Supports temporary Kaggle tokened URLs
+- elapsed session time;
+- player body position `(X, Y, Z)`;
+- body/head rotation represented as quaternion components.
 
-2. **Data Preprocessing**
-   - Select numeric motion fields only
-   - Normalize features in range `[-1, 1]` using `MinMaxScaler`
+## Workflow
 
-3. **GAN Architecture**
-   - Generator: 2–3 hidden layers using ReLU/tanh
-   - Discriminator: Fully connected classifier
-   - Optimizers: Adam with binary crossentropy loss
+1. Import and load the dataset.
+2. Select numeric motion fields.
+3. Normalize features with `MinMaxScaler`.
+4. Train a simple GAN generator/discriminator.
+5. Generate synthetic samples.
+6. Scale outputs back to the original range.
+7. Inspect feature relationships with correlation analysis.
 
-4. **Training**
-   - Trains GAN over 50 epochs using real + generated motion data
-   - Logs epoch progress
+## Outputs
 
-5. **Synthetic Data Generation**
-   - Generates new samples of player motion
-   - Scales them back to original range
-   - Exports to `synthetic_data.csv`
+- `new_synthetic_data.csv` — GAN-generated motion telemetry.
+- `correlation_matrix.csv` — feature-correlation matrix when enabled.
 
-6. **Correlation Analysis (Optional)**
-   - Plots encoded correlation matrices to inspect statistical realism
-   - Saves as `correlation_matrix.csv`
+## Tech stack
 
----
+- Google Colab / Python
+- TensorFlow 2.x
+- pandas, NumPy
+- scikit-learn
+- Matplotlib, Seaborn
+- GAN training workflow
 
-## 📈 Output
+## Case study
 
-- `new_synthetic_data.csv` — Normalized, GAN-generated user motion telemetry
-- `correlation_matrix.csv` — Heatmap matrix of feature relations (if enabled)
+See [docs/case-study.md](docs/case-study.md) for the research framing, design choices, and limitations.
 
----
+## Privacy note
 
-## 🔐 Purpose & Ethics
+This project should be treated as a proof of concept. Synthetic data generation does not automatically guarantee privacy. Any public examples should use permitted datasets, synthetic samples, or anonymized artifacts only.
 
-This project is a proof of concept for **privacy-preserving data generation** from player telemetry. By learning to model behavior without storing real identifiable sequences, we enable:
-- Ethical VR analytics
-- Secure ML research
-- Compliance with data protection frameworks (e.g., GDPR)
+## Current limitations
 
----
+- Lightweight GAN architecture, not a production synthetic-data system.
+- Dataset provenance and usage terms should be reviewed before redistribution.
+- Privacy evaluation should be strengthened with explicit threat models and re-identification tests.
+- Colab-first workflow should be converted into reproducible scripts if the project is extended.
 
-## 📄 License
+## License
 
-MIT License — free to use, modify, and cite with attribution.
-
----
-
-## 👩‍💻 Author
-
-Created by [Jayasri](https://github.com/jayasrisng)  
+MIT License — use, modify, and cite with attribution.
